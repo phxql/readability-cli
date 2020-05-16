@@ -38,7 +38,7 @@ const readability = (dom) => {
     console.error(JSON.stringify(article));
   }
   if (article.title) {
-    console.log('<h1>', sanitizeHtml(article.title), '</h1>')
+    console.log('<p><b>', sanitizeHtml(article.title), '</b></p>')
   }
   // console.log(article.content);
   console.log(sanitizeHtml(article.content, sanOpts));
