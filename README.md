@@ -31,4 +31,12 @@ Options:
 
 `curl https://example.com | readability https://example.com `
 
+```zsh
+readmoz () {
+    local url="$1"
+    local html="$(curl "$url" | readability "$url")"
+    print -nr -- "$html"
+}
+```
+
 [1]: //github.com/mozilla/readability

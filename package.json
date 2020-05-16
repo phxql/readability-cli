@@ -1,7 +1,7 @@
 {
   "name": "mozilla-readability-cli",
-  "version": "0.2.2",
-  "description": "A CLI for Mozilla Readability. Supports sanitization.",
+  "version": "0.2.3",
+  "description": "A CLI for Mozilla Readability. Get clean, uncluttered, ready-to-read HTML from any webpage!",
   "keywords": [
     "readability",
     "cli",
