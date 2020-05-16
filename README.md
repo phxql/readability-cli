@@ -1,32 +1,34 @@
-# readability-wrapper
+# readability-cli
 
-A CLI wrapper for [Mozilla's Readability][1].
-
-Requires Node.js. I usually use the latest version (10.0.0 as of writing).
+A CLI for [Mozilla's Readability][1].
 
 ## Install
 
-To install globally with [yarn][2]: `yarn global add readability-wrapper`
+To install globally with `yarn`:
 
-To install globally with npm: `npm install -g readability-wrapper`
+`yarn global add mozilla-readability-cli`
+
+To install globally with `npm`:
+
+`npm install -g mozilla-readability-cli`
 
 ## Usage
 
-`readability` takes one or more arguments and parses each with Readability. Arguments can be either file paths or URLs.
-Cleaned HTML is printed to stdout.
+```
+# run readability --help for the latest version, I just copy it here once in a while.
 
-`readability` will parse piped input if there are no arguments.
+Usage: readability [options] <url>
+
+Sanitizes stdin, parses the result with Mozilla Readability, somewhat sanitizes the output again, and finally print it to stdout. Note that you need to also specify the URL in addition to feeding us the HTML in stdin. Using an empty URL seems to work though.
+
+Options:
+  -V, --version  output the version number
+  -h, --help     display help for command
+```
 
 
 ## Examples
 
-Parse a file: `readability index.html`
-
-Parse a URL: `readability https://example.com`
-
-Pipe cURL output: `curl https://example.com | readability`
-
-Mix file paths and URLs: `readability file1.html https://example.com/`
+`curl https://example.com | readability https://example.com `
 
 [1]: //github.com/mozilla/readability
-[2]: //yarnpkg.com/en/
