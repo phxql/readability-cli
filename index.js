@@ -25,13 +25,13 @@ const program = require('commander');
 const pkg = require('./package.json');
 const Readability = require('readability');
 
-const readability = (dom) => {
+const readability = (dom, url) => {
   // Happens on missing file
   if (!dom) return;
   const article = new Readability(dom.window.document).parse();
 
   if (!article) {
-    console.error('Error: Readability returned nothing. This usually happens on empty input');
+    console.error(`Error: Readability returned nothing for url "${url}". This usually happens on empty input.`);
     return;
   }
   if (debug) {
@@ -63,7 +63,7 @@ const run = (url) => {
       url: url,
     };
 
-    readability(new JSDOM(clean, options));
+    readability(new JSDOM(clean, options), url);
   })();
 };
 
