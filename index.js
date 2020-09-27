@@ -23,7 +23,7 @@ const sanOpts = {
 }
 const program = require('commander');
 const pkg = require('./package.json');
-const Readability = require('readability');
+var { Readability } = require('@mozilla/readability');
 
 const readability = (dom, url) => {
   // Happens on missing file
