@@ -1,6 +1,6 @@
 {
   "name": "mozilla-readability-cli",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "A CLI for Mozilla Readability. Get clean, uncluttered, ready-to-read HTML from any webpage!",
   "keywords": [
     "readability",
