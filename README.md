@@ -19,7 +19,7 @@ To install globally with `npm`:
 
 Usage: readability [options] <url>
 
-Sanitizes stdin, parses the result with Mozilla Readability, somewhat sanitizes the output again, and finally print it to stdout. Note that you need to also specify the URL in addition to feeding us the HTML in stdin. Using an empty URL seems to work though.
+Sanitizes stdin, parses the result with Mozilla Readability, somewhat sanitizes the output again, and finally prints it to stdout. Note that you need to also specify the URL in addition to feeding us the HTML in stdin. Using an empty URL seems to work though.
 
 Options:
   -V, --version  output the version number

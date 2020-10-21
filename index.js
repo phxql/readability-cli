@@ -70,7 +70,7 @@ const run = (url) => {
 program
   .version(pkg.version)
   .arguments('<url>')
-  .description('Sanitizes stdin, parses the result with Mozilla Readability, somewhat sanitizes the output again, and finally print it to stdout. Note that you need to also specify the URL in addition to feeding us the HTML in stdin. Using an empty URL seems to work though.')
+  .description('Sanitizes stdin, parses the result with Mozilla Readability, somewhat sanitizes the output again, and finally prints it to stdout. Note that you need to also specify the URL in addition to feeding us the HTML in stdin. Using an empty URL seems to work though.')
   .action(run)
   .parse(process.argv);
 
