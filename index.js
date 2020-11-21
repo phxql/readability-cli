@@ -8,7 +8,8 @@ const { JSDOM } = jsdom;
 const jsdomConsole = new jsdom.VirtualConsole();
 
 // Suppress these errors for now
-jsdomConsole.on('jsdomError', () => { });
+jsdomConsole.on('jsdomError', () => {
+});
 
 const createDOMPurify = require('dompurify');
 const window = new JSDOM('').window;
@@ -16,7 +17,19 @@ const DOMPurify = createDOMPurify(window);
 const sanitizeHtml = require('sanitize-html');
 const program = require('commander');
 const pkg = require('./package.json');
-var { Readability } = require('@mozilla/readability');
+var {Readability} = require('@mozilla/readability');
+
+const purifyOptions = {
+  // Return the whole purified document, otherwise the title extraction from readability won't work
+  WHOLE_DOCUMENT: true
+}
+
+const sanitizerOptions = {
+  // Allow all tags
+  allowedTags: false,
+  // Allow all attributes
+  allowedAttributes: false
+}
 
 const readability = (dom, url) => {
   // Happens on missing file
@@ -30,10 +43,10 @@ const readability = (dom, url) => {
 
   article.url = url;
   // Sanitize content
-  article.content = sanitizeHtml(article.content);
+  article.content = sanitizeHtml(article.content, sanitizerOptions);
   if (article.title) {
-    // Sanitize title
-    article.title = sanitizeHtml(article.title);
+    // Sanitize title, don't allow any tags in the title
+    article.title = sanitizeHtml(article.title, {allowedTags: [], allowedAttributes: {}});
   }
 
   return article;
@@ -45,8 +58,7 @@ const run = (url) => {
     const getStdin = require('get-stdin');
     var doc = await getStdin();
 
-    // Let DOMPurify return the whole document, otherwise the title extraction won't work
-    const sanitizedDom = DOMPurify.sanitize(doc, {WHOLE_DOCUMENT: true});
+    const sanitizedDom = DOMPurify.sanitize(doc, purifyOptions);
     if (debug) {
       console.error('url: ', url)
     }
