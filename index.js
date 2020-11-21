@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const debug = Boolean(process.env.DEBUGME)
-// const handleError = err => console.error(err.toString());
 
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
@@ -15,33 +14,29 @@ const createDOMPurify = require('dompurify');
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
 const sanitizeHtml = require('sanitize-html');
-const sanOpts = {
-  // allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img' ])
-  // allow all tags or all attributes:
-  allowedTags: false,
-  allowedAttributes: false
-}
 const program = require('commander');
 const pkg = require('./package.json');
 var { Readability } = require('@mozilla/readability');
 
 const readability = (dom, url) => {
   // Happens on missing file
-  if (!dom) return;
+  if (!dom) return null;
   const article = new Readability(dom.window.document).parse();
 
-  if (!article) {
+  if (!article || !article.content) {
     console.error(`Error: Readability returned nothing for url "${url}". This usually happens on empty input.`);
-    return;
+    return null;
   }
-  if (debug) {
-    console.error(JSON.stringify(article));
-  }
+
+  article.url = url;
+  // Sanitize content
+  article.content = sanitizeHtml(article.content);
   if (article.title) {
-    console.log('<p><b>', sanitizeHtml(article.title), '</b></p>')
+    // Sanitize title
+    article.title = sanitizeHtml(article.title);
   }
-  // console.log(article.content);
-  console.log(sanitizeHtml(article.content, sanOpts));
+
+  return article;
 };
 
 
@@ -50,7 +45,8 @@ const run = (url) => {
     const getStdin = require('get-stdin');
     var doc = await getStdin();
 
-    const clean = DOMPurify.sanitize(doc);
+    // Let DOMPurify return the whole document, otherwise the title extraction won't work
+    const sanitizedDom = DOMPurify.sanitize(doc, {WHOLE_DOCUMENT: true});
     if (debug) {
       console.error('url: ', url)
     }
@@ -63,7 +59,12 @@ const run = (url) => {
       url: url,
     };
 
-    readability(new JSDOM(clean, options), url);
+    const article = readability(new JSDOM(sanitizedDom, options), url);
+    if (article == null) {
+      process.exit(1);
+    } else {
+      console.log(JSON.stringify(article));
+    }
   })();
 };
 

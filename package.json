@@ -27,5 +27,8 @@
   "bin": {
     "readability": "./index.js"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "scripts": {
+    "run": "curl -s https://example.com | node index.js https://example.com"
+  }
 }
