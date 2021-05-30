@@ -18,6 +18,7 @@ const sanitizeHtml = require('sanitize-html');
 const program = require('commander');
 const pkg = require('./package.json');
 var {Readability} = require('@mozilla/readability');
+const fs = require('fs');
 
 const purifyOptions = {
   // Return the whole purified document, otherwise the title extraction from readability won't work
@@ -55,8 +56,7 @@ const readability = (dom, url) => {
 
 const run = (url) => {
   (async () => {
-    const getStdin = require('get-stdin');
-    var doc = await getStdin();
+    var doc = await fs.readFileSync(0, 'utf-8');
 
     const sanitizedDom = DOMPurify.sanitize(doc, purifyOptions);
     if (debug) {
