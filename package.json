@@ -18,8 +18,8 @@
   "author": "Fereidoon Mehri (http://github.com/NightMachinary)",
   "dependencies": {
     "@mozilla/readability": "^0.4.1",
-    "commander": "^7.2.0",
-    "dompurify": "^2.2.8",
+    "commander": "^8.0.0",
+    "dompurify": "^2.2.9",
     "jsdom": "^16.6.0",
     "sanitize-html": "^2.4.0"
   },
